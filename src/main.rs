@@ -1,5 +1,6 @@
 use std::fs::File;
 use std::io::{self, BufRead};
+use std::collections::HashMap;
 
 fn read_arrays_from_file(filename: &str, arr1: &mut Vec<i32>, arr2: &mut Vec<i32>) {
     let file = File::open(filename).expect("Error opening the file");
@@ -26,16 +27,32 @@ fn array_diff_sum(arr1: &[i32], arr2: &[i32]) -> i32 {
         .sum()
 }
 
+fn array_occurrences_sum (arr1: &[i32], arr2: &[i32]) -> i32 {
+
+    let mut frequency_map = HashMap::new();
+    for &num in arr2 {
+        *frequency_map.entry(num).or_insert(0) += 1;
+    }
+
+    arr1.iter()
+    .map(|&num| num * frequency_map.get(&num).cloned().unwrap_or(0))
+    .sum()
+}
+
 fn main() {
-    let mut arr1 = Vec::new();
-    let mut arr2 = Vec::new();
+    let mut left_column = Vec::new();
+    let mut right_column = Vec::new();
 
-    read_arrays_from_file("assets/lists.txt", &mut arr1, &mut arr2);
+    read_arrays_from_file("assets/lists.txt", &mut left_column, &mut right_column);
 
-    arr1.sort_unstable();
-    arr2.sort_unstable();
+    left_column.sort_unstable();
+    right_column.sort_unstable();
 
-    let result = array_diff_sum(&arr1, &arr2);
-    println!("The sum of the elements is: {}", result);
+    let result1 = array_diff_sum(&left_column, &right_column);
+
+    println!("Part 1: {}", result1);
+
+    let result2 = array_occurrences_sum(&left_column, &right_column);
+    println!("Part 2: {}", result2);
     
 }

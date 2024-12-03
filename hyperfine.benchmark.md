@@ -1,3 +1,3 @@
 | Command | Mean [µs] | Min [µs] | Max [µs] | Relative |
 |:---|---:|---:|---:|---:|
-| `./target/release/historian_hysteria` | 651.6 ± 119.1 | 421.9 | 1602.3 | 1.00 |
+| `./target/release/historian_hysteria` | 705.1 ± 114.4 | 464.7 | 1526.7 | 1.00 |
